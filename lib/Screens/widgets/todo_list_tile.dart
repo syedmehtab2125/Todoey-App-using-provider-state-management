@@ -1,20 +1,35 @@
 import 'package:flutter/material.dart';
 
-class TodosListTile extends StatelessWidget {
-  const TodosListTile({
-    Key? key,
-  }) : super(key: key);
+//Lifting up the state
+class TodosListTile extends StatefulWidget {
+  @override
+  State<TodosListTile> createState() => _TodosListTileState();
+}
+
+class _TodosListTileState extends State<TodosListTile> {
+  bool isChecked = false;
+  void test(bool toogle) {
+    setState(() {
+      isChecked = toogle;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      title: const Text(
+      title: Text(
         "Need to buy eggs",
-        style: TextStyle(fontSize: 18),
+        style: TextStyle(
+            fontSize: 18,
+            decoration: isChecked ? TextDecoration.lineThrough : null),
       ),
       trailing: Checkbox(
-        value: false,
-        onChanged: (value) {},
+        value: isChecked,
+        onChanged: (value) {
+          setState(() {
+            isChecked = value!;
+          });
+        },
       ),
     );
   }

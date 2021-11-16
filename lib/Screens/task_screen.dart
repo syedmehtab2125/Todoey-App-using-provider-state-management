@@ -49,7 +49,7 @@ class TaskScreen extends StatelessWidget {
             ],
           ),
         ),
-        const TodoListView()
+        TodoListView()
       ])),
     );
   }

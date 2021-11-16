@@ -2,10 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:todoey/Screens/widgets/todo_list_tile.dart';
 
 class TodoListView extends StatelessWidget {
-  const TodoListView({
-    Key? key,
-  }) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
     return Expanded(
@@ -18,10 +14,15 @@ class TodoListView extends StatelessWidget {
             topRight: Radius.circular(20),
           ),
         ),
-        child: ListView(
-          children: const [
-            TodosListTile(),
-          ],
+        child: SizedBox(
+          height: 200,
+          child: ListView(
+            shrinkWrap: true,
+            children: [
+              TodosListTile(),
+              TodosListTile(),
+            ],
+          ),
         ),
       ),
     );
