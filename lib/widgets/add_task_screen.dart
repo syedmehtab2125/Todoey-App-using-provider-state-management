@@ -1,7 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:todoey/models/task.dart';
 
-class AddTaskScreen extends StatelessWidget {
-  const AddTaskScreen({Key? key}) : super(key: key);
+class AddTaskScreen extends StatefulWidget {
+  final List<Task> tasks;
+  final Function addTodo;
+  AddTaskScreen({required this.tasks, required this.addTodo});
+
+  @override
+  State<AddTaskScreen> createState() => _AddTaskScreenState();
+}
+
+class _AddTaskScreenState extends State<AddTaskScreen> {
+  @override
+  TextEditingController textEditingController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -25,11 +36,14 @@ class AddTaskScreen extends StatelessWidget {
                 textAlign: TextAlign.center,
                 style: TextStyle(fontSize: 30, color: Colors.blueAccent),
               ),
-              const TextField(
+              TextField(
                 autofocus: true,
+                controller: textEditingController,
               ),
               TextButton(
-                onPressed: () {},
+                onPressed: () {
+                  widget.addTodo(textEditingController.text);
+                },
                 child: const Text(
                   "Add",
                   style: TextStyle(color: Colors.white, fontSize: 20),
