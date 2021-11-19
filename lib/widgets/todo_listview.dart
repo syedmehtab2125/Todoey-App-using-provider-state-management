@@ -1,15 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:todoey/models/task.dart';
+import 'package:provider/provider.dart';
+import 'package:todoey/models/task_data.dart';
 import 'package:todoey/widgets/todo_list_tile.dart';
 
-class TodoListView extends StatefulWidget {
-  final List<Task> tasks;
-  TodoListView({required this.tasks});
-  @override
-  State<TodoListView> createState() => _TodoListViewState();
-}
-
-class _TodoListViewState extends State<TodoListView> {
+class TodoListView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Expanded(
@@ -26,18 +20,24 @@ class _TodoListViewState extends State<TodoListView> {
           padding: const EdgeInsets.only(bottom: 70.0),
           child: SizedBox(
               height: 200,
-              child: ListView.builder(
-                  itemCount: widget.tasks.length,
-                  itemBuilder: (_, index) {
-                    return TodosListTile(
-                        todoName: widget.tasks[index].name,
-                        isChecked: widget.tasks[index].isDone,
-                        checkboxCallback: (checkboxState) {
-                          setState(() {
-                            widget.tasks[index].isDone = checkboxState;
-                          });
-                        });
-                  })),
+              child: Consumer<TaskData>(
+                builder: (context, TaskData, child) {
+                  return ListView.builder(
+                      itemCount: TaskData.taskCount,
+                      itemBuilder: (_, index) {
+                        return TodosListTile(
+                            todoName: TaskData.tasks[index].name,
+                            isChecked: TaskData.tasks[index].isDone,
+                            checkboxCallback: (checkboxState) {
+                              TaskData.isChecked(index, checkboxState);
+                              TaskData.CompletedTasks();
+                              // setState(() {
+                              //   widget.tasks[index].isDone = checkboxState;
+                              // });
+                            });
+                      });
+                },
+              )),
         ),
       ),
     );
